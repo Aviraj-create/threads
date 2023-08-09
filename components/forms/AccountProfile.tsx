@@ -10,23 +10,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { isBase64Image } from "@/lib/utils";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter,usePathname } from "next/navigation";
+import { updateUser } from "@/lib/actions/user.actions";
+
 
 
 
 interface Props {
   user: {
-    id: string | undefined,
-    username: string | null | undefined,
-    bio: string,
-    image: string | undefined;
+    id: string ;
+    objectId:string;
+    username: string ;
+    bio: string;
+    image: string;
+     name:string;
   };
   btnTitle: string;
 }
 
 const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
 
-  const rtr = useRouter()
+  const router = useRouter();
+  const pathname=usePathname();
 
   const { startUpload } = useUploadThing("media");
   const [files, setFiles] = useState<File[]>([]);
@@ -55,7 +60,8 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
     const values = {
       profile_photo: profilePhoto,
       username: username,
-      bio: bio
+      bio: bio,
+      name:user.name
     };
 
     const blob = values.profile_photo;
@@ -69,10 +75,27 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
       }
     }
 
+    await updateUser(
+     { username:values.username,
+      bio:values.bio,
+      name:values.name,
+      image:values.profile_photo,
+      userId:user.id,
+      path:pathname}
+    );
+
     // Your form submission logic here
     console.log("Form values:", values);
 
-    rtr.push("/")
+    if(pathname==='/profile/edit')
+    {
+      router.back();
+    }
+    else{
+      router.push('/');
+    }
+
+    
 
   }
 
