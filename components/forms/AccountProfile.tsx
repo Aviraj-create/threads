@@ -9,12 +9,10 @@ import { UserValidation } from '@/lib/validations/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { isBase64Image } from "@/lib/utils";
-import { ChangeEvent, FormEvent, useState } from "react";
+
 import { useRouter,usePathname } from "next/navigation";
 import { updateUser } from "@/lib/actions/user.actions";
-
-
-
+import { ChangeEvent, FormEvent, useState } from "react";
 
 interface Props {
   user: {
@@ -137,7 +135,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
           type="text"
           className="account-form_input no-focus"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e:any) => setUsername(e.target.value)}
         />
       </div>
 
@@ -147,7 +145,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
           rows={10}
           className="account-form_input no-focus"
           value={bio}
-          onChange={(e) => setBio(e.target.value)}
+          onChange={(e:any) => setBio(e.target.value)}
         />
       </div>
 

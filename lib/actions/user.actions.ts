@@ -1,3 +1,5 @@
+"use server"
+
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
@@ -19,8 +21,8 @@ export async function updateUser({
   image,
   path,
 }: Params): Promise<void> {
-  connectToDB();
-
+  await connectToDB();
+  
   try {
     await User.findOneAndUpdate(
       { id: userId },
@@ -31,7 +33,7 @@ export async function updateUser({
         image,
         onboarded: true,
       },
-      { upsert: true }
+      { upsert : true }
     );
 
     if (path === '/profile.edit') {
@@ -44,7 +46,7 @@ export async function updateUser({
 
 export async function fetchUser(userId: string) {
   try {
-    connectToDB();
+    await connectToDB();
 
     return await User.findOne({ id: userId });
   } catch (error: any) {
