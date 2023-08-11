@@ -13,18 +13,33 @@ function PostThread({ userId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
+
   const [threadContent, setThreadContent] = useState("");
   const { organization } = useOrganization();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await createThread({
-      text: threadContent,
-      author: userId,
-      communityId: organization ? organization.id : null,
-      path: pathname,
-    });
+    if (!organization) {
+      await createThread({
+        text: threadContent,
+        author: userId,
+        communityId: null,
+        path: pathname,
+      });
+    }
+    else {
+
+      await createThread({
+        text: threadContent,
+        author: userId,
+        communityId: organization.id,
+        path: pathname,
+      });
+
+    }
+
+
 
     router.push("/");
   };

@@ -8,7 +8,6 @@ export default async function Home() {
   const result = await fetchPosts(1, 30);
   const user = await currentUser();
 
-  console.log(result);
   return (
     <>
       <h1 className="head-text text-left">Home</h1>
@@ -27,7 +26,7 @@ export default async function Home() {
                 content={post.text}
                 author={post.author}
                 community={post.community}
-                createdAt={post.createAt}
+                createdAt={post.createdAt}
                 comments={post.children}
               />
             ))}
