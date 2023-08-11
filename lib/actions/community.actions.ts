@@ -51,7 +51,7 @@ export async function createCommunity(
 
 export async function fetchCommunityDetails(id: string) {
   try {
-    await connectToDB();
+    connectToDB();
 
     const communityDetails = await Community.findOne({ id }).populate([
       "createdBy",
