@@ -30,7 +30,7 @@ export default async function Home() {
                 comments={post.children}
               />
             ))}
-            {JSON.stringify(result)}
+            {/* {JSON.stringify(result)} */}
 
           </>
         )}
