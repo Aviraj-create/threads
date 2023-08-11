@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { fetchUserPost } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
@@ -28,7 +28,10 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
                     currentUserId={currentUserId}
                     parentId={thread.parentId}
                     content={thread.text}
-                    author={thread.author}//todo
+                    author={
+                        accountType == 'User'
+                            ? { name: result.name, image: result.image, id: result.id }
+                            : { name: thread.author.name, image: thread.iauthor.image, id: thread.author.id }}//todo
                     community={thread.community}//todo
                     createdAt={thread.createAt}
                     comments={thread.children}
