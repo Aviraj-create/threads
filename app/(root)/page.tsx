@@ -1,4 +1,4 @@
-// "use client"
+"use server"
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/thread.actions";
 import { currentUser } from '@clerk/nextjs';
