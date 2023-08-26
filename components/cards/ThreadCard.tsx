@@ -9,7 +9,6 @@ interface Props {
     id: string;
     currentUserId: string;
     parentId: string | null;
-    content: string;
     author: {
         name: string;
         image: string;
@@ -27,6 +26,8 @@ interface Props {
         }
     }[]
     isComment?: boolean;
+    imageUrl: string;
+    caption: string
 }
 
 const ThreadCard = ({
@@ -35,7 +36,8 @@ const ThreadCard = ({
     id,
     currentUserId,
     parentId,
-    content,
+    caption,
+    imageUrl,
     author,
     community,
     createdAt,
@@ -43,8 +45,8 @@ const ThreadCard = ({
     isComment,
 
 }: Props) => {
-    const dateObj = new Date(createdAt);
-    const formattedDate = `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
+    // const dateObj = new Date(createdAt);
+    // const formattedDate = `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
 
     return (
         <article className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
@@ -69,7 +71,12 @@ const ThreadCard = ({
                         <Link href={`/profile/${author.id}`} className="w-fit">
                             <h4 className="cursor-pointer text-base-semibold text-light-1 ">{author.name}</h4>
                         </Link>
-                        <p className="mt-2 text-small-regular text-light-2">{content}</p>
+                        <p className="mt-2 text-small-regular text-light-2">{caption}</p>
+
+                        <div className="relative h-32 w-20">
+                            <Image src={imageUrl} alt={"meme img"} fill={true} />
+                        </div>
+
                         <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
 
                             <div className="flex gap-3.5">
@@ -90,6 +97,7 @@ const ThreadCard = ({
                                 <Image src="/assets/share.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain" />
                             </div>
 
+
                             {isComment && comments.length > 0 && (
                                 <Link href={`/thread/${id}`}>
                                     <p className="mt-1 text-subtle-medium text-gray-1">
@@ -99,7 +107,9 @@ const ThreadCard = ({
                                 </Link>
                             )}
                         </div>
+                        {/* <p className="mt-2 text-small-regular text-light-2">{formatDateString(createdAt)}</p> */}
                     </div>
+
 
                 </div>
 

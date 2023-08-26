@@ -8,6 +8,8 @@ import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
 
+
+
 export async function createCommunity(
   id: string,
   name: string,
@@ -18,6 +20,9 @@ export async function createCommunity(
 ) {
   try {
     connectToDB();
+
+
+    console.log('Creating comm');
 
     // Find the user with the provided unique id
     const user = await User.findOne({ id: createdById });

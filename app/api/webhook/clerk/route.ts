@@ -35,6 +35,8 @@ type Event = {
 };
 
 export const POST = async (request: Request) => {
+
+
   const payload = await request.json();
   const header = headers();
 
@@ -51,6 +53,7 @@ export const POST = async (request: Request) => {
   let evnt: Event | null = null;
 
   try {
+    console.log("verifying")
     evnt = wh.verify(
       JSON.stringify(payload),
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
@@ -62,6 +65,37 @@ export const POST = async (request: Request) => {
   const eventType: EventType = evnt?.type!;
 
   // Listen organization creation event
+  // if (eventType === "organization.created") {
+  //   // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/CreateOrganization
+  //   // Show what evnt?.data sends from above resource
+  //   const { id, name, slug, logo_url, image_url, created_by } =
+  //     evnt?.data ?? {};
+
+  //   try {
+      
+  //     console.log('febh')
+
+  //     // @ts-ignore
+  //     await createCommunity(
+  //       // @ts-ignore
+  //       id,
+  //       name,
+  //       slug,
+  //       logo_url || image_url,
+  //       "org bio",
+  //       created_by
+  //     );
+
+  //     return NextResponse.json({ message: "User created" }, { status: 201 });
+  //   } catch (err) {
+  //     console.log(err);
+  //     return NextResponse.json(
+  //       { message: "Internal Server Error" },
+  //       { status: 500 }
+  //     );
+  //   }
+  // }
+
   if (eventType === "organization.created") {
     // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/CreateOrganization
     // Show what evnt?.data sends from above resource
@@ -89,6 +123,7 @@ export const POST = async (request: Request) => {
       );
     }
   }
+
 
   // Listen organization invitation creation event.
   // Just to show. You can avoid this or tell people that we can create a new mongoose action and
